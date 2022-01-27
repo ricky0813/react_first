@@ -2,9 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Detail = (props) => {
-    const dayWord = ['일','월','화','수','목','금','토']
-    const dayWordEn = ['sun','mon','tue','wed','thu','fri','sat']
+const Detail = ({dayArr}) => {
     const day = useParams().day
 
     const circles = React.useRef([])
@@ -18,10 +16,8 @@ const Detail = (props) => {
     
     const rateCircleKey = (e) =>{
         const value = e.key;
-        const num = ['1','2','3','4','5']
 
-
-        if(num.includes(value)){
+        if(value >= 1 && value <= 5){
             circles.current.forEach(a=>a.classList.remove('circle-on'))
             for(let j = 0; j < value; j++){
                 circles.current[j].classList.add('circle-on')
@@ -44,7 +40,7 @@ const Detail = (props) => {
 
     return (
         <Container>
-                <h2>{dayWord[dayWordEn.indexOf(day)]}요일</h2>
+                <h2>{dayArr.dayWord[dayArr.dayWordEn.indexOf(day)]}요일</h2>
                 <div className='circle-wrap'>
                     <div className='circle' ref={e=>circles.current[0]=e}></div>
                     <div className='circle' ref={e=>circles.current[1]=e}></div>
@@ -106,7 +102,7 @@ const Container = styled.div`
         font-size: 16px;
         background-color: #45474a;
         color: #fff;
-        font-weight: 500;
+        font-weight: 300;
         transition: 0.2s;
         cursor: pointer;
         margin: 3vh auto 0;

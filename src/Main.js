@@ -2,11 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const Main = () => {
-    const dayWord = ['일','월','화','수','목','금','토']
-    const dayWordEn = ['sun','mon','tue','wed','thu','fri','sat']
+const Main = ({dayArr}) => {
     let day = new Date().getDay();
-
     
     const circles = React.useRef([]);
 
@@ -27,10 +24,10 @@ const Main = () => {
             <h1>나의 일주일은?</h1>
 
             <ul>
-                {dayWord.map((a,i)=>{
+                {dayArr.dayWord.map((a,i)=>{
                     return(
                         <li key={i}>
-                            <p className='day'>{dayWord[(day+i)%7]}</p>
+                            <p className='day'>{dayArr.dayWord[(day+i)%7]}</p>
                             <CircleWrap ref={e => circles.current[i] = e }>
                                 <div className='circle'></div>
                                 <div className='circle'></div>
@@ -38,7 +35,7 @@ const Main = () => {
                                 <div className='circle'></div>
                                 <div className='circle'></div>
                             </CircleWrap>
-                            <Link to={`/detail/${dayWordEn[(day+i)%7]}`}>
+                            <Link to={`/detail/${dayArr.dayWordEn[(day+i)%7]}`}>
                                 <div className='arrow'></div>
                             </Link>
                         </li>
@@ -57,7 +54,8 @@ const Container = styled.div`
     h1 {
         text-align: center;
         margin: 8vh 0 4vh 0;
-        font-size: 1.6em;
+        font-size: 1.7em;
+        font-weight: 700;
     }
 
     ul {
@@ -78,13 +76,12 @@ const Container = styled.div`
         margin-bottom: 10px;
         background-color: #fff;
         border-radius: 10px;
-        
     }
 
     .day {
         display: block;
-        font-size: 18px;
-        font-weight: 500;
+        font-size: 16px;
+        font-weight: 400;
         margin: 0 0 5px 0;
         
     }
@@ -95,10 +92,15 @@ const Container = styled.div`
         border-style: solid;
         border-width: 0 10px calc(10px * 1.732) 10px;
         border-color: transparent transparent #444 transparent;
-        transform: rotate(90deg);
+        transform: rotate(90deg) translateY(0) ;
         margin-bottom: 4px;
-        cursor: pointer;
+        cursor: pointer;      
+        transition: 0.3s;
     }
+
+    .arrow:hover{
+            transform: rotate(90deg) translateY(-3px);
+        }
 `;
 
 const CircleWrap = styled.div`
